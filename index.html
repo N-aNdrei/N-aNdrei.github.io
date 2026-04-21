@@ -64,8 +64,8 @@ const showBtn1 = document.getElementById("show1");
 const clearBtn1 = document.getElementById("clear1");
 const output1 = document.getElementById("output1");
 
-document.cookie = "name=Oeschger";
-document.cookie = "favorite_food=tripe";
+document.cookie = "name=Oeschger; SameSite=None; Secure";
+document.cookie = "favorite_food=tripe; SameSite=None; Secure";
 
 showBtn1.addEventListener("click", () => {
   output1.textContent = `> ${document.cookie}`;
@@ -81,8 +81,8 @@ const showBtn2 = document.getElementById("show2");
 const clearBtn2 = document.getElementById("clear2");
 const output2 = document.getElementById("output2");
 
-document.cookie = "test1=Hello";
-document.cookie = "test2=World";
+document.cookie = "test1=Hello; SameSite=None; Secure";
+document.cookie = "test2=World; SameSite=None; Secure";
 
 showBtn2.addEventListener("click", () => {
   const cookieValue = document.cookie
@@ -104,7 +104,9 @@ const clearBtn3 = document.getElementById("clear3");
 const output3 = document.getElementById("output3");
 
 doOnceBtn3.addEventListener("click", () => {
-  if (!document.cookie.split("; ").find(row => row.startsWith("doSomethingOnlyOnce"))) {
+  if (!document.cookie
+      .split("; ")
+      .find(row => row.startsWith("doSomethingOnlyOnce"))) {
     document.cookie = "doSomethingOnlyOnce=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
     output3.textContent = "> Do something here!";
   }
