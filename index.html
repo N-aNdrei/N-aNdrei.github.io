@@ -1,31 +1,141 @@
-<script> 
-  document.cookie = "session=test GDPR"; document.cookie = "favorite_task=collect Data"; function alertCookie() { alert(document.cookie); } 
-const showBtn = document.getElementById("show");
-const clearBtn = document.getElementById("clear");
-const output = document.getElementById("cookie-value");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cookie Examples (MDN)</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    button { margin: 5px; }
+    code { display: block; margin-top: 10px; background: #f4f4f4; padding: 10px; }
+  </style>
+</head>
+<body>
 
-// Note that we are setting `SameSite=None;` in this example because the example
-// needs to work cross-origin.
-// It is more common not to set the `SameSite` attribute, which results in the default,
-// and more secure, value of `SameSite=Lax;`
-document.cookie = "name=Oeschger; SameSite=None; Secure";
-document.cookie = "favorite_food=tripe; SameSite=None; Secure";
+  <h1>🍪 Cookie Examples (MDN)</h1>
 
-showBtn.addEventListener("click", () => {
-  output.textContent = `> ${document.cookie}`;
-});
-clearBtn.addEventListener("click", () => {
-  output.textContent = "";
-});
+  <!-- EXAMPLE 1 -->
+  <h2>Example 1: Show all cookies</h2>
+  <button id="ex1-show">Show cookies</button>
+  <button id="ex1-clear">Clear</button>
+  <code id="ex1-output"></code>
 
-</script> 
-<body> 
-  Bine ai venit la lab 
-  <button onclick="alertCookie()">Show cookies</button> 
-</body> 
+  <!-- EXAMPLE 2 -->
+  <h2>Example 2: Get cookie "test2"</h2>
+  <button id="ex2-show">Show test2</button>
+  <code id="ex2-output"></code>
 
-<button id="show">Show cookies</button>
-<button id="clear">Clear</button>
-<div>
-  <code id="cookie-value"></code>
-</div>
+  <!-- EXAMPLE 3 -->
+  <h2>Example 3: Do something only once</h2>
+  <button id="ex3-run">Run once</button>
+  <code id="ex3-output"></code>
+
+  <!-- EXAMPLE 4 -->
+  <h2>Example 4: Reset cookie</h2>
+  <button id="ex4-set">Set cookie</button>
+  <button id="ex4-reset">Reset cookie</button>
+  <code id="ex4-output"></code>
+
+  <!-- EXAMPLE 5 -->
+  <h2>Example 5: Simple cookie library (mini)</h2>
+  <button id="ex5-set">Set custom cookie</button>
+  <button id="ex5-get">Get custom cookie</button>
+  <code id="ex5-output"></code>
+
+<script>
+/* =====================
+   EXAMPLE 1
+===================== */
+document.cookie = "name=Oeschger";
+document.cookie = "favorite_food=tripe";
+
+const ex1Output = document.getElementById("ex1-output");
+
+document.getElementById("ex1-show").onclick = () => {
+  ex1Output.textContent = document.cookie;
+};
+
+document.getElementById("ex1-clear").onclick = () => {
+  ex1Output.textContent = "";
+};
+
+/* =====================
+   EXAMPLE 2
+===================== */
+document.cookie = "test1=Hello";
+document.cookie = "test2=World";
+
+const ex2Output = document.getElementById("ex2-output");
+
+document.getElementById("ex2-show").onclick = () => {
+  const value = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("test2="))
+    ?.split("=")[1];
+
+  ex2Output.textContent = value || "Not found";
+};
+
+/* =====================
+   EXAMPLE 3
+===================== */
+const ex3Output = document.getElementById("ex3-output");
+
+document.getElementById("ex3-run").onclick = () => {
+  const exists = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("doOnce"));
+
+  if (!exists) {
+    document.cookie = "doOnce=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+    ex3Output.textContent = "Executed FIRST TIME";
+  } else {
+    ex3Output.textContent = "Already executed before";
+  }
+};
+
+/* =====================
+   EXAMPLE 4
+===================== */
+const ex4Output = document.getElementById("ex4-output");
+
+document.getElementById("ex4-set").onclick = () => {
+  document.cookie = "resetTest=active";
+  ex4Output.textContent = "Cookie set: resetTest=active";
+};
+
+document.getElementById("ex4-reset").onclick = () => {
+  document.cookie = "resetTest=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  ex4Output.textContent = "Cookie deleted";
+};
+
+/* =====================
+   EXAMPLE 5
+===================== */
+const ex5Output = document.getElementById("ex5-output");
+
+// mini cookie helper
+function setCookie(name, value) {
+  document.cookie = `${name}=${value}`;
+}
+
+function getCookie(name) {
+  return document.cookie
+    .split("; ")
+    .find(row => row.startsWith(name + "="))
+    ?.split("=")[1];
+}
+
+document.getElementById("ex5-set").onclick = () => {
+  setCookie("myCookie", "HelloWorld");
+  ex5Output.textContent = "Cookie saved!";
+};
+
+document.getElementById("ex5-get").onclick = () => {
+  const val = getCookie("myCookie");
+  ex5Output.textContent = val || "Not found";
+};
+
+</script>
+
+</body>
+</html>
