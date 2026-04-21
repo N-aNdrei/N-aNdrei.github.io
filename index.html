@@ -2,60 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cookie Examples (MDN)</title>
+  <title>MDN Cookie Examples</title>
   <style>
     body { font-family: Arial; padding: 20px; }
+    section { margin-bottom: 30px; }
     button { margin: 5px; }
-    code { display: block; margin-top: 10px; background: #f4f4f4; padding: 10px; }
+    code { display: block; background: #f4f4f4; padding: 10px; }
   </style>
 </head>
 <body>
 
-  <h1>🍪 Cookie Examples (MDN)</h1>
+<h1>🍪 MDN Cookie Examples (1–6)</h1>
 
-  <!-- EXAMPLE 1 -->
-  <h2>Example 1: Show all cookies</h2>
-  <button id="ex1-show">Show cookies</button>
-  <button id="ex1-clear">Clear</button>
-  <code id="ex1-output"></code>
+<!-- EXAMPLE 1 -->
+<section>
+<h2>Example 1</h2>
+<button id="show1">Show cookies</button>
+<button id="clear1">Clear</button>
+<code id="output1"></code>
+</section>
 
-  <!-- EXAMPLE 2 -->
-  <h2>Example 2: Get cookie "test2"</h2>
-  <button id="ex2-show">Show test2</button>
-  <code id="ex2-output"></code>
+<!-- EXAMPLE 2 -->
+<section>
+<h2>Example 2</h2>
+<button id="show2">Show cookie value</button>
+<button id="clear2">Clear</button>
+<code id="output2"></code>
+</section>
 
-  <!-- EXAMPLE 3 -->
-  <h2>Example 3: Do something only once</h2>
-  <button id="ex3-run">Run once</button>
-  <code id="ex3-output"></code>
+<!-- EXAMPLE 3 -->
+<section>
+<h2>Example 3</h2>
+<button id="doOnce3">Only do something once</button>
+<button id="clear3">Clear</button>
+<code id="output3"></code>
+</section>
 
-  <!-- EXAMPLE 4 -->
-  <h2>Example 4: Reset cookie</h2>
-  <button id="ex4-set">Set cookie</button>
-  <button id="ex4-reset">Reset cookie</button>
-  <code id="ex4-output"></code>
+<!-- EXAMPLE 4 -->
+<section>
+<h2>Example 4</h2>
+<button id="reset4">Reset only once cookie</button>
+<button id="clear4">Clear</button>
+<code id="output4"></code>
+</section>
 
-  <!-- EXAMPLE 5 -->
-  <h2>Example 5: Simple cookie library (mini)</h2>
-  <button id="ex5-set">Set custom cookie</button>
-  <button id="ex5-get">Get custom cookie</button>
-  <code id="ex5-output"></code>
+<!-- EXAMPLE 5 -->
+<section>
+<h2>Example 5</h2>
+<button id="check5">Check cookie exists</button>
+<button id="clear5">Clear</button>
+<code id="output5"></code>
+</section>
+
+<!-- EXAMPLE 6 -->
+<section>
+<h2>Example 6</h2>
+<button id="check6">Check cookie value</button>
+<button id="clear6">Clear</button>
+<code id="output6"></code>
+</section>
 
 <script>
+
 /* =====================
    EXAMPLE 1
 ===================== */
 document.cookie = "name=Oeschger";
 document.cookie = "favorite_food=tripe";
 
-const ex1Output = document.getElementById("ex1-output");
-
-document.getElementById("ex1-show").onclick = () => {
-  ex1Output.textContent = document.cookie;
+document.getElementById("show1").onclick = () => {
+  document.getElementById("output1").textContent = "> " + document.cookie;
 };
-
-document.getElementById("ex1-clear").onclick = () => {
-  ex1Output.textContent = "";
+document.getElementById("clear1").onclick = () => {
+  document.getElementById("output1").textContent = "";
 };
 
 /* =====================
@@ -64,75 +83,68 @@ document.getElementById("ex1-clear").onclick = () => {
 document.cookie = "test1=Hello";
 document.cookie = "test2=World";
 
-const ex2Output = document.getElementById("ex2-output");
-
-document.getElementById("ex2-show").onclick = () => {
-  const value = document.cookie
+document.getElementById("show2").onclick = () => {
+  const cookieValue = document.cookie
     .split("; ")
     .find(row => row.startsWith("test2="))
     ?.split("=")[1];
 
-  ex2Output.textContent = value || "Not found";
+  document.getElementById("output2").textContent = "> " + cookieValue;
+};
+document.getElementById("clear2").onclick = () => {
+  document.getElementById("output2").textContent = "";
 };
 
 /* =====================
    EXAMPLE 3
 ===================== */
-const ex3Output = document.getElementById("ex3-output");
-
-document.getElementById("ex3-run").onclick = () => {
-  const exists = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("doOnce"));
-
-  if (!exists) {
-    document.cookie = "doOnce=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    ex3Output.textContent = "Executed FIRST TIME";
-  } else {
-    ex3Output.textContent = "Already executed before";
+document.getElementById("doOnce3").onclick = () => {
+  if (!document.cookie.split("; ").find(row => row.startsWith("doSomethingOnlyOnce"))) {
+    document.cookie = "doSomethingOnlyOnce=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+    document.getElementById("output3").textContent = "> Do something here!";
   }
+};
+document.getElementById("clear3").onclick = () => {
+  document.getElementById("output3").textContent = "";
 };
 
 /* =====================
    EXAMPLE 4
 ===================== */
-const ex4Output = document.getElementById("ex4-output");
-
-document.getElementById("ex4-set").onclick = () => {
-  document.cookie = "resetTest=active";
-  ex4Output.textContent = "Cookie set: resetTest=active";
+document.getElementById("reset4").onclick = () => {
+  document.cookie = "doSomethingOnlyOnce=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.getElementById("output4").textContent = "> Reset!";
 };
-
-document.getElementById("ex4-reset").onclick = () => {
-  document.cookie = "resetTest=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  ex4Output.textContent = "Cookie deleted";
+document.getElementById("clear4").onclick = () => {
+  document.getElementById("output4").textContent = "";
 };
 
 /* =====================
    EXAMPLE 5
 ===================== */
-const ex5Output = document.getElementById("ex5-output");
+document.cookie = "reader=1";
 
-// mini cookie helper
-function setCookie(name, value) {
-  document.cookie = `${name}=${value}`;
-}
-
-function getCookie(name) {
-  return document.cookie
-    .split("; ")
-    .find(row => row.startsWith(name + "="))
-    ?.split("=")[1];
-}
-
-document.getElementById("ex5-set").onclick = () => {
-  setCookie("myCookie", "HelloWorld");
-  ex5Output.textContent = "Cookie saved!";
+document.getElementById("check5").onclick = () => {
+  if (document.cookie.split(";").some(item => item.trim().startsWith("reader="))) {
+    document.getElementById("output5").textContent = '> The cookie "reader" exists';
+  } else {
+    document.getElementById("output5").textContent = '> The cookie "reader" does not exist';
+  }
+};
+document.getElementById("clear5").onclick = () => {
+  document.getElementById("output5").textContent = "";
 };
 
-document.getElementById("ex5-get").onclick = () => {
-  const val = getCookie("myCookie");
-  ex5Output.textContent = val || "Not found";
+/* =====================
+   EXAMPLE 6
+===================== */
+document.getElementById("check6").onclick = () => {
+  if (document.cookie.split(";").some(item => item.includes("reader=1"))) {
+    document.getElementById("output6").textContent = '> The cookie "reader" has value 1';
+  }
+};
+document.getElementById("clear6").onclick = () => {
+  document.getElementById("output6").textContent = "";
 };
 
 </script>
