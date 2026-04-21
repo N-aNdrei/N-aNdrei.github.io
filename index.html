@@ -1,151 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title> Cookie Examples</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    section { margin-bottom: 30px; }
-    button { margin: 5px; }
-    code { display: block; background: #f4f4f4; padding: 10px; }
-  </style>
+  <meta charset="UTF-8">
+  <title>MDN Cookie Examples</title>
 </head>
 <body>
 
-<h1>🍪 Cookie Examples (1–6)</h1>
+<h1>🍪 Cookie Examples</h1>
 
 <!-- EXAMPLE 1 -->
-<section>
 <h2>Example 1</h2>
 <button id="show1">Show cookies</button>
 <button id="clear1">Clear</button>
 <code id="output1"></code>
-</section>
 
 <!-- EXAMPLE 2 -->
-<section>
 <h2>Example 2</h2>
 <button id="show2">Show cookie value</button>
 <button id="clear2">Clear</button>
 <code id="output2"></code>
-</section>
 
 <!-- EXAMPLE 3 -->
-<section>
 <h2>Example 3</h2>
-<button id="doOnce3">Only do something once</button>
+<button id="do-once3">Only once</button>
 <button id="clear3">Clear</button>
 <code id="output3"></code>
-</section>
 
 <!-- EXAMPLE 4 -->
-<section>
 <h2>Example 4</h2>
-<button id="reset4">Reset only once cookie</button>
+<button id="reset4">Reset</button>
 <button id="clear4">Clear</button>
 <code id="output4"></code>
-</section>
 
 <!-- EXAMPLE 5 -->
-<section>
 <h2>Example 5</h2>
-<button id="check5">Check cookie exists</button>
+<button id="check5">Check exists</button>
 <button id="clear5">Clear</button>
 <code id="output5"></code>
-</section>
 
 <!-- EXAMPLE 6 -->
-<section>
 <h2>Example 6</h2>
-<button id="check6">Check cookie value</button>
+<button id="check6">Check value</button>
 <button id="clear6">Clear</button>
 <code id="output6"></code>
-</section>
 
 <script>
 
 /* =====================
    EXAMPLE 1
 ===================== */
+const showBtn1 = document.getElementById("show1");
+const clearBtn1 = document.getElementById("clear1");
+const output1 = document.getElementById("output1");
+
 document.cookie = "name=Oeschger";
 document.cookie = "favorite_food=tripe";
 
-document.getElementById("show1").onclick = () => {
-  document.getElementById("output1").textContent = "> " + document.cookie;
-};
-document.getElementById("clear1").onclick = () => {
-  document.getElementById("output1").textContent = "";
-};
+showBtn1.addEventListener("click", () => {
+  output1.textContent = `> ${document.cookie}`;
+});
+clearBtn1.addEventListener("click", () => {
+  output1.textContent = "";
+});
 
 /* =====================
    EXAMPLE 2
 ===================== */
+const showBtn2 = document.getElementById("show2");
+const clearBtn2 = document.getElementById("clear2");
+const output2 = document.getElementById("output2");
+
 document.cookie = "test1=Hello";
 document.cookie = "test2=World";
 
-document.getElementById("show2").onclick = () => {
+showBtn2.addEventListener("click", () => {
   const cookieValue = document.cookie
     .split("; ")
-    .find(row => row.startsWith("test2="))
+    .find((row) => row.startsWith("test2="))
     ?.split("=")[1];
 
-  document.getElementById("output2").textContent = "> " + cookieValue;
-};
-document.getElementById("clear2").onclick = () => {
-  document.getElementById("output2").textContent = "";
-};
+  output2.textContent = `> ${cookieValue}`;
+});
+clearBtn2.addEventListener("click", () => {
+  output2.textContent = "";
+});
 
 /* =====================
    EXAMPLE 3
 ===================== */
-document.getElementById("doOnce3").onclick = () => {
+const doOnceBtn3 = document.getElementById("do-once3");
+const clearBtn3 = document.getElementById("clear3");
+const output3 = document.getElementById("output3");
+
+doOnceBtn3.addEventListener("click", () => {
   if (!document.cookie.split("; ").find(row => row.startsWith("doSomethingOnlyOnce"))) {
     document.cookie = "doSomethingOnlyOnce=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    document.getElementById("output3").textContent = "> Do something here!";
+    output3.textContent = "> Do something here!";
   }
-};
-document.getElementById("clear3").onclick = () => {
-  document.getElementById("output3").textContent = "";
-};
+});
+clearBtn3.addEventListener("click", () => {
+  output3.textContent = "";
+});
 
 /* =====================
    EXAMPLE 4
 ===================== */
-document.getElementById("reset4").onclick = () => {
+const resetBtn4 = document.getElementById("reset4");
+const clearBtn4 = document.getElementById("clear4");
+const output4 = document.getElementById("output4");
+
+resetBtn4.addEventListener("click", () => {
   document.cookie = "doSomethingOnlyOnce=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.getElementById("output4").textContent = "> Reset!";
-};
-document.getElementById("clear4").onclick = () => {
-  document.getElementById("output4").textContent = "";
-};
+  output4.textContent = "> Reset!";
+});
+clearBtn4.addEventListener("click", () => {
+  output4.textContent = "";
+});
 
 /* =====================
    EXAMPLE 5
 ===================== */
+const checkBtn5 = document.getElementById("check5");
+const clearBtn5 = document.getElementById("clear5");
+const output5 = document.getElementById("output5");
+
 document.cookie = "reader=1";
 
-document.getElementById("check5").onclick = () => {
+checkBtn5.addEventListener("click", () => {
   if (document.cookie.split(";").some(item => item.trim().startsWith("reader="))) {
-    document.getElementById("output5").textContent = '> The cookie "reader" exists';
+    output5.textContent = '> The cookie "reader" exists';
   } else {
-    document.getElementById("output5").textContent = '> The cookie "reader" does not exist';
+    output5.textContent = '> The cookie "reader" does not exist';
   }
-};
-document.getElementById("clear5").onclick = () => {
-  document.getElementById("output5").textContent = "";
-};
+});
+clearBtn5.addEventListener("click", () => {
+  output5.textContent = "";
+});
 
 /* =====================
    EXAMPLE 6
 ===================== */
-document.getElementById("check6").onclick = () => {
+const checkBtn6 = document.getElementById("check6");
+const clearBtn6 = document.getElementById("clear6");
+const output6 = document.getElementById("output6");
+
+checkBtn6.addEventListener("click", () => {
   if (document.cookie.split(";").some(item => item.includes("reader=1"))) {
-    document.getElementById("output6").textContent = '> The cookie "reader" has value 1';
+    output6.textContent = '> The cookie "reader" has a value of "1"';
   }
-};
-document.getElementById("clear6").onclick = () => {
-  document.getElementById("output6").textContent = "";
-};
+});
+clearBtn6.addEventListener("click", () => {
+  output6.textContent = "";
+});
 
 </script>
 
